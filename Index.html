@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strong Capital Partners - Authority Engine</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(255, 107, 0, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(52, 152, 219, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(46, 204, 113, 0.1) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(1deg); }
+        }
+        
+        .hero-content {
+            z-index: 2;
+            position: relative;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff6b00, #3498db, #2ecc71);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+        
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: #94a3b8;
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 4rem 0;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b00, #3498db, #2ecc71);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ff6b00;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: #cbd5e1;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .section {
+            padding: 6rem 0;
+            position: relative;
+        }
+        
+        .section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #ffffff, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(180deg, #ff6b00, #3498db, #2ecc71);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            margin: 3rem 0;
+            position: relative;
+        }
+        
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 45%;
+            position: relative;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: auto;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-right: auto;
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            top: 2rem;
+            width: 20px;
+            height: 20px;
+            background: #ff6b00;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            border: 4px solid #1a1a2e;
+            z-index: 2;
+        }
+        
+        .phase-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff6b00;
+            margin-bottom: 1rem;
+        }
+        
+        .deliverables {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        
+        .deliverables li {
+            padding: 0.5rem 0;
+            color: #cbd5e1;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .deliverables li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #ff6b00;
+            font-weight: bold;
+        }
+        
+        .roi-section {
+            background: rgba(255, 107, 0, 0.1);
+            border-radius: 24px;
+            padding: 4rem;
+            margin: 4rem 0;
+            text-align: center;
+            border: 1px solid rgba(255, 107, 0, 0.2);
+        }
+        
+        .roi-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: #ff6b00;
+        }
+        
+        .roi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .roi-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .roi-timeframe {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #3498db;
+            margin-bottom: 1rem;
+        }
+        
+        .roi-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ff6b00;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cta-section {
+            text-align: center;
+            padding: 6rem 0;
+            background: linear-gradient(135deg, rgba(255, 107, 0, 0.1), rgba(52, 152, 219, 0.1));
+            border-radius: 24px;
+            margin: 4rem 0;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b00, #3498db);
+            color: white;
+            padding: 1.5rem 3rem;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(255, 107, 0, 0.3);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(255, 107, 0, 0.4);
+        }
+        
+        .investment-box {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 2px solid #ff6b00;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            text-align: center;
+        }
+        
+        .investment-amount {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #ff6b00;
+            margin-bottom: 1rem;
+        }
+        
+        .investment-description {
+            color: #cbd5e1;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-content {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+            }
+            
+            .timeline-marker {
+                left: 20px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            animation: floatAround 15s linear infinite;
+        }
+        
+        @keyframes floatAround {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-element" style="left: 10%; animation-delay: -2s; font-size: 2rem;">💼</div>
+        <div class="floating-element" style="left: 20%; animation-delay: -4s; font-size: 1.5rem;">📈</div>
+        <div class="floating-element" style="left: 80%; animation-delay: -6s; font-size: 2rem;">🎯</div>
+        <div class="floating-element" style="left: 70%; animation-delay: -8s; font-size: 1.5rem;">💰</div>
+        <div class="floating-element" style="left: 90%; animation-delay: -10s; font-size: 2rem;">🚀</div>
+    </div>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Strong Capital Partners<br>Authority Engine</h1>
+                <p class="subtitle">Transform from hunting deals to having qualified prospects chase you</p>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">300-500%</span>
+                        <span class="stat-label">ROI in 90 Days</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">50-75</span>
+                        <span class="stat-label">Qualified Calls/Month</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">1,000+</span>
+                        <span class="stat-label">New Leads/Month</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">25%+</span>
+                        <span class="stat-label">Course to Call Rate</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Your Complete Lead Generation Ecosystem</h2>
+            
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="phase-title">Phase 1: Authority Foundation</div>
+                        <p>Position yourself as THE capital expert prospects need to work with</p>
+                        <ul class="deliverables">
+                            <li>Custom-branded course platform</li>
+                            <li>Strategic lead magnets (3 high-value assets)</li>
+                            <li>Email marketing ecosystem</li>
+                            <li>Brand positioning materials</li>
+                            <li>Analytics & tracking setup</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="phase-title">Phase 2: Traffic Generation</div>
+                        <p>Drive qualified prospects to your authority assets at scale</p>
+                        <ul class="deliverables">
+                            <li>Meta AI campaign system (15+ creatives)</li>
+                            <li>LinkedIn AI outreach engine</li>
+                            <li>Content marketing assets</li>
+                            <li>Advanced audience targeting</li>
+                            <li>Retargeting campaigns</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-marker"></div>
+                    <div class="timeline-content">
+                        <div class="phase-title">Phase 3: Conversion Optimization</div>
+                        <p>Turn interested prospects into booked, qualified sales conversations</p>
+                        <ul class="deliverables">
+                            <li>Landing page suite (4 optimized pages)</li>
+                            <li>Sales enablement package</li>
+                            <li>CRM & automation setup</li>
+                            <li>A/B testing framework</li>
+                            <li>Upsell & retention systems</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <h2>Proven Results: Ralph Advisory Course Portfolio</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem; margin: 3rem 0;">
+                <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 2rem; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #ff6b00, #3498db);"></div>
+                    <div style="color: #ff6b00; font-weight: 700; font-size: 1.1rem; margin-bottom: 1rem;">Category Pirates → Industry Authority</div>
+                    <div style="color: #cbd5e1; margin-bottom: 1.5rem; line-height: 1.6;">
+                        <strong>Challenge:</strong> Business experts needed systematic way to position themselves as category creators and thought leaders.
+                    </div>
+                    <div style="color: #cbd5e1; margin-bottom: 1.5rem; line-height: 1.6;">
+                        <strong>Solution:</strong> Built "Category Design Fundamentals" course + "Strategy Therapy" program with live workshops and lifetime access.
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.5rem;">
+                        <div style="text-align: center; padding: 1rem; background: rgba(255, 107, 0, 0.1); border-radius: 8px;">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #ff6b00;">Expert</div>
+                            <div style="color: #cbd5e1; font-size: 0.9rem;">Authority Built</div>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: rgba(52, 152, 219, 0.1); border-radius: 8px;">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #3498db;">Category</div>
+                            <div style="color: #cbd5e1; font-size: 0.9rem;">Leadership</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 2rem; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #ff6b00, #3498db);"></div>
+                    <div style="color: #ff6b00; font-weight: 700; font-size: 1.1rem; margin-bottom: 1rem;">6-Figure Solopreneur → Automated Empire</div>
+                    <div style="color: #cbd5e1; margin-bottom: 1.5rem; line-height: 1.6;">
+                        <strong>Challenge:</strong> Solopreneurs trapped trading time for money, wanting to scale without burnout.
+                    </div>
+                    <div style="color: #cbd5e1; margin-bottom: 1.5rem; line-height: 1.6;">
+                        <strong>Solution:</strong> "6-Figure Solopreneur Systems" course teaching exact systems for content, sales, marketing, and fulfillment automation.
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.5rem;">
+                        <div style="text-align: center; padding: 1rem; background: rgba(255, 107, 0, 0.1); border-radius: 8px;">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #ff6b00;">Systems</div>
+                            <div style="color: #cbd5e1; font-size: 0.9rem;">Automation Built</div>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: rgba(52, 152, 219, 0.1); border-radius: 8px;">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #3498db;">Scalable</div>
+                            <div style="color: #cbd5e1; font-size: 0.9rem;">Revenue Model</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 2rem; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, #ff6b00, #3498db);"></div>
+                    <div style="color: #ff6b00; font-weight: 700; font-size: 1.1rem; margin-bottom: 1rem;">Strategy Therapy → Category Leadership</div>
+                    <div style="color: #cbd5e1; margin-bottom: 1.5rem; line-height: 1.6;">
+                        <strong>Challenge:</strong> Business leaders frustrated with annual strategy planning that led to competing on price.
+                    </div>
+                    <div style="color: #cbd5e1; margin-bottom: 1.5rem; line-height: 1.6;">
+                        <strong>Solution:</strong> Monthly live workshops, personalized feedback, and one-page strategy narratives that simplify complex business planning.
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-top: 1.5rem;">
+                        <div style="text-align: center; padding: 1rem; background: rgba(255, 107, 0, 0.1); border-radius: 8px;">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #ff6b00;">Strategic</div>
+                            <div style="color: #cbd5e1; font-size: 0.9rem;">Framework Built</div>
+                        </div>
+                        <div style="text-align: center; padding: 1rem; background: rgba(52, 152, 219, 0.1); border-radius: 8px;">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #3498db;">Monthly</div>
+                            <div style="color: #cbd5e1; font-size: 0.9rem;">Live Workshops</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem; padding: 2rem; background: rgba(255, 107, 0, 0.05); border-radius: 16px; border: 1px solid rgba(255, 107, 0, 0.1);">
+                <div style="font-size: 1.2rem; font-weight: 600; color: #ff6b00; margin-bottom: 1rem;">The Ralph Advisory Methodology</div>
+                <div style="color: #cbd5e1; line-height: 1.6;">
+                    <strong>Category Design + Authority Positioning + AI-Powered Lead Generation + Systematic Conversion</strong><br>
+                    Every client gets the same proven framework that's generated millions in revenue and established market-leading positions across industries.
+                </div>
+            </div>
+        </div>
+    </section>
+                <div class="roi-title">Projected Results & ROI</div>
+                <div class="roi-grid">
+                    <div class="roi-card">
+                        <div class="roi-timeframe">Month 1</div>
+                        <div class="roi-value">15-25</div>
+                        <div>Qualified Conversations</div>
+                    </div>
+                    <div class="roi-card">
+                        <div class="roi-timeframe">Month 2-3</div>
+                        <div class="roi-value">35-50</div>
+                        <div>Conversations/Month</div>
+                    </div>
+                    <div class="roi-card">
+                        <div class="roi-timeframe">Month 4-6</div>
+                        <div class="roi-value">50-75</div>
+                        <div>Conversations/Month</div>
+                    </div>
+                    <div class="roi-card">
+                        <div class="roi-timeframe">6 Months</div>
+                        <div class="roi-value">6,000+</div>
+                        <div>Total Pipeline Leads</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="investment-box">
+                <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; margin-bottom: 2rem; flex-wrap: wrap;">
+                    <div style="text-decoration: line-through; color: #94a3b8; font-size: 1.8rem; font-weight: 600;">$15,000</div>
+                    <div class="investment-amount" style="margin-bottom: 0;">$2,500</div>
+                    <div style="background: linear-gradient(135deg, #ff6b00, #3498db); color: white; padding: 0.5rem 1rem; border-radius: 8px; font-weight: 700; font-size: 0.9rem; text-transform: uppercase;">Limited Offer</div>
+                </div>
+                <div class="investment-description">
+                    Complete system build • 90 days execution • Ongoing optimization<br>
+                    <strong>83% OFF - Get Started Today & Scale Tomorrow</strong><br>
+                    <span style="color: #ff6b00; font-weight: 600;">Real Value: $15,000 | Your Investment: $2,500</span>
+                </div>
+            </div>
+            
+            <div class="cta-section">
+                <h2 style="margin-bottom: 2rem; color: white;">Ready to Stop Hunting and Start Attracting?</h2>
+                <p style="font-size: 1.2rem; margin-bottom: 3rem; color: #cbd5e1;">
+                    Transform Strong Capital Partners into the authority that prospects chase<br>
+                    instead of the company that chases prospects.
+                </p>
+                <button class="cta-button" onclick="window.open('mailto:david@strongcapitalpartners.com?subject=Ready%20to%20Execute%20-%20Authority%20Engine&body=David%2C%0A%0AI%27m%20ready%20to%20execute%20the%20Strong%20Capital%20Partners%20Authority%20Engine.%0A%0ALet%27s%20start%20Monday.%0A%0ABest%20regards%2C%0ARalph%20Kapiamba%0ARalph%20Advisory', '_blank')">
+                    Execute Now
+                </button>
+                
+                <div style="margin-top: 4rem; padding-top: 3rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #ff6b00; margin-bottom: 0.5rem;">Ralph Kapiamba</div>
+                            <div style="color: #cbd5e1; font-size: 1rem;">Lead Generation & Authority Positioning Specialist</div>
+                            <div style="color: #3498db; font-size: 1rem; margin-top: 0.5rem;">
+                                <a href="http://ralphadvisory.com/" target="_blank" style="color: #3498db; text-decoration: none; hover: text-decoration: underline;">
+                                    Ralph Advisory
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="text-align: center; margin-top: 2rem; padding: 1.5rem; background: rgba(255, 107, 0, 0.05); border-radius: 12px; border: 1px solid rgba(255, 107, 0, 0.1);">
+                        <p style="color: #cbd5e1; font-style: italic; font-size: 1rem; line-height: 1.6; margin: 0;">
+                            "You said you can sell, you just need the right doors opened at the right volume with the right prep. 
+                            This system does exactly that. When you show up to these conversations, you'll close because they already know they need what you offer."
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Add smooth scrolling and interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate stats on scroll
+            const observerOptions = {
+                threshold: 0.5,
+                rootMargin: '0px 0px -50px 0px'
+            };
+            
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.transform = 'translateY(0)';
+                        entry.target.style.opacity = '1';
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe timeline items
+            const timelineItems = document.querySelectorAll('.timeline-item');
+            timelineItems.forEach((item, index) => {
+                item.style.transform = 'translateY(50px)';
+                item.style.opacity = '0';
+                item.style.transition = `all 0.6s ease ${index * 0.2}s`;
+                observer.observe(item);
+            });
+            
+            // Add hover effects to stat cards
+            const statCards = document.querySelectorAll('.stat-card');
+            statCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.background = 'rgba(255, 107, 0, 0.1)';
+                    this.style.borderColor = 'rgba(255, 107, 0, 0.3)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.background = 'rgba(255, 255, 255, 0.05)';
+                    this.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
